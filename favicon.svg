@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle"
+    font-family="'Courier New', monospace" font-weight="bold" font-size="30"
+    fill="#00ff41" filter="url(#glow)">Py</text>
+</svg>
