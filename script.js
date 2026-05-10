@@ -25,27 +25,96 @@ let execStartTime = 0, timerInterval = null, fontSize = 14, wordWrap = true;
 /* ══════════ MULTI-FILE SYSTEM (max 5) ══════════ */
 const MAX_FILES = 5;
 let files = [
-  { name: 'main.py', content: `# Welcome to PyNux — Online Python Compiler
-# Start coding in Python below!
+  { name: 'main.py', content: `# ═══════════════════════════════════════════
+# 🐍 PyNux — Python Feature Showcase
+# All Python built-ins & standard library work!
+# ═══════════════════════════════════════════
 
-def greet(name):
-    """Say hello the hacker way."""
-    border = "═" * (len(name) + 18)
-    print(f"╔{border}╗")
-    print(f"║  >> Hello, {name}! 🐍  ║")
-    print(f"╚{border}╝")
+# ── Built-in Functions ──
+nums = [42, 8, 15, 16, 23, 4]
+print("Original:", nums)
+print("Sorted:  ", sorted(nums))
+print("Reversed:", list(reversed(nums)))
+print(f"len={len(nums)}, sum={sum(nums)}, min={min(nums)}, max={max(nums)}")
+print(f"abs(-7)={abs(-7)}, round(3.14159,2)={round(3.14159,2)}, pow(2,10)={pow(2,10)}")
 
-greet("PyNux User")
+# ── String Methods ──
+text = "hello pynux"
+print(f"\\nupper: {text.upper()}")
+print(f"title: {text.title()}")
+print(f"split: {text.split()}")
+print(f"replace: {text.replace('pynux','world')}")
+print(f"find 'nux': index {text.find('nux')}")
 
-# Try some Python features:
-numbers = [x ** 2 for x in range(1, 11)]
-print(f"\\nSquares 1→10: {numbers}")
+# ── List / Dict / Set ──
+squares = [x**2 for x in range(1, 6)]
+evens = list(filter(lambda x: x%2==0, range(1, 11)))
+mapped = list(map(str, squares))
+print(f"\\nSquares: {squares}")
+print(f"Evens: {evens}")
+print(f"Mapped: {mapped}")
+print(f"Zip: {list(zip(['a','b','c'], [1,2,3]))}")
 
-for i, sq in enumerate(numbers, 1):
-    bar = "█" * (sq // 5 + 1)
-    print(f"  {i:>2}² = {sq:>3}  {bar}")
+fruits = {"apple": 3, "banana": 1, "cherry": 5}
+print(f"Dict sorted by value: {sorted(fruits.items(), key=lambda x: x[1])}")
 
-print("\\n✅ Code executed successfully!")
+unique = set([1,2,2,3,3,3])
+print(f"Set: {unique}, type: {type(unique).__name__}")
+
+# ── Math Module ──
+import math
+print(f"\\nπ={math.pi}, e={math.e:.4f}")
+print(f"sqrt(144)={math.sqrt(144)}, factorial(7)={math.factorial(7)}")
+print(f"gcd(48,18)={math.gcd(48,18)}, log2(256)={math.log2(256)}")
+
+# ── Random Module ──
+import random
+print(f"\\nRandom int 1-100: {random.randint(1, 100)}")
+print(f"Random choice: {random.choice(['🎯','🚀','🔥','⚡','💎'])}")
+sample = random.sample(range(1, 50), 5)
+print(f"Random sample: {sample}")
+
+# ── Datetime ──
+from datetime import datetime, timedelta
+now = datetime.now()
+print(f"\\nNow: {now.strftime('%Y-%m-%d %H:%M:%S')}")
+print(f"Tomorrow: {(now + timedelta(days=1)).strftime('%A, %B %d')}")
+
+# ── Collections ──
+from collections import Counter, defaultdict
+words = "hello world hello python hello pynux world".split()
+print(f"\\nWord counts: {dict(Counter(words).most_common())}")
+
+# ── Regex ──
+import re
+emails = "Contact us at info@pynux.dev or hello@test.com"
+found = re.findall(r'[\\w.]+@[\\w.]+', emails)
+print(f"\\nEmails found: {found}")
+
+# ── Classes & OOP ──
+class Hacker:
+    def __init__(self, name, skill):
+        self.name = name
+        self.skill = skill
+    def __repr__(self):
+        return f"Hacker({self.name}, lvl={self.skill})"
+
+team = [Hacker("Neo", 99), Hacker("Trinity", 95), Hacker("Morpheus", 92)]
+team.sort(key=lambda h: h.skill, reverse=True)
+print(f"\\nTeam: {team}")
+
+# ── Lambda, Map, Filter, Reduce ──
+from functools import reduce
+product = reduce(lambda a, b: a * b, range(1, 6))
+print(f"\\n5! via reduce: {product}")
+
+# ── Enumerate & Comprehensions ──
+print("\\n🏆 Top Skills:")
+for i, h in enumerate(team, 1):
+    bar = "█" * (h.skill // 10)
+    print(f"  #{i} {h.name:>10} [{bar}] {h.skill}")
+
+print("\\n✅ All features working perfectly!")
 ` }
 ];
 let activeFileIdx = 0;
