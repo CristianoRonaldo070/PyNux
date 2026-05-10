@@ -409,8 +409,9 @@ async function runCode() {
     pyodide.runPython(`
 import builtins
 def _pynux_input(prompt=""):
-    from js import _pynux_get_input
-    return _pynux_get_input(prompt)
+    from js import _pynux_sync_input
+    result = _pynux_sync_input(prompt)
+    return str(result) if result is not None else ""
 builtins.input = _pynux_input
 `);
     await pyodide.runPythonAsync(code);
@@ -428,23 +429,12 @@ builtins.input = _pynux_input
   statusState.textContent = 'Ready'; statusState.style.color = '';
 }
 
-window._pynux_get_input = function (prompt) {
-  return new Promise(resolve => {
-    inputLabel.textContent = prompt || 'Enter input:';
-    inputOverlay.style.display = 'flex';
-    inputField.value = ''; inputField.focus();
-    appendOutput(prompt || '', 'out-input-line');
-    const h = e => {
-      if (e.key === 'Enter') {
-        const v = inputField.value;
-        inputField.removeEventListener('keydown', h);
-        inputOverlay.style.display = 'none';
-        appendOutput(v + '\n', 'out-input-line');
-        resolve(v);
-      }
-    };
-    inputField.addEventListener('keydown', h);
-  });
+// Synchronous input — window.prompt() blocks JS and returns a string immediately
+window._pynux_sync_input = function (prompt) {
+  appendOutput(prompt || '', 'out-input-line');
+  const value = window.prompt(prompt || 'Enter input:') || '';
+  appendOutput(value + '\n', 'out-input-line');
+  return value;
 };
 
 /* ══════════ TOOLBAR ══════════ */
